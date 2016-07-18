@@ -1,5 +1,7 @@
 package com.hansong.getty
 
+import com.hansong.getty.event.PipeLine
+
 import java.nio.channels.SocketChannel
 
 /**
@@ -11,11 +13,9 @@ class ConnectionCtx {
     Object attachment
     Worker worker
     Long timeout
+    PipeLine pipeLine
 
-    ConnectionCtx(channel, worker) {
-        this.channel = channel
-        this.worker = worker
+    ConnectionCtx() {
         this.timeout = System.currentTimeMillis() + GettyConfig.TIME_OUT
     }
-
 }

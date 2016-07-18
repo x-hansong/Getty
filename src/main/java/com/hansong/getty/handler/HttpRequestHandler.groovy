@@ -58,7 +58,7 @@ class HttpRequestHandler extends EventAdapter{
                     "<body>\n" +
                     "<h1>404 NOT FOUND</h1>\n" +
                     "</body>\n" +
-                    "</html>"
+                    "</html>\n"
             response.headers[CONTENT_LENGTH] = response.body.length()
         }
 

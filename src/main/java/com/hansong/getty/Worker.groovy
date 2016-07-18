@@ -1,21 +1,19 @@
 package com.hansong.getty
 
-import com.hansong.getty.event.PipeLine
 import org.slf4j.LoggerFactory
 
 import java.nio.ByteBuffer
 import java.nio.channels.FileChannel
 import java.nio.channels.SelectionKey
 import java.nio.channels.Selector
-
 /**
+ * 工作线程，负责注册server传递过来的socket连接。
+ * 主要监听读事件，管理socket，处理写操作
  * Created by hansong.xhs on 2016/6/22.
  */
 class Worker extends Thread {
 
     def logger = LoggerFactory.getLogger("${Worker.name}-${this.getId()}")
-
-    PipeLine pipeLine
 
     Selector selector
 
@@ -25,9 +23,7 @@ class Worker extends Thread {
 
     TreeMap<Long, ConnectionCtx> ctxTreeMap
 
-    Worker(pipeLine) {
-        this.pipeLine = pipeLine
-
+    Worker() {
         ctxTreeMap = new TreeMap<>()
         selector = Selector.open()
         buffer = ByteBuffer.allocateDirect(GettyConfig.WORKER_RCV_BUFFER_SIZE)
@@ -84,7 +80,7 @@ class Worker extends Thread {
                 //对端的socket已经关闭
                 if (r == -1) {
                     logger.info("remote client closed")
-                    pipeLine.fireOnClosed(ctx)
+                    ctx.pipeLine.fireOnClosed(ctx)
                     break
                 }
 
@@ -93,10 +89,10 @@ class Worker extends Thread {
 
                 //把缓存区引用传递给连接，进行处理
                 ctx.attachment = buffer
-                pipeLine.fireOnRead(ctx)
+                ctx.pipeLine.fireOnRead(ctx)
             } catch (Exception e) { //在对端强制关闭连接的情况下读该channel会产生异常
                 logger.error("read()", e)
-                pipeLine.fireOnClosed(ctx)
+                ctx.pipeLine.fireOnClosed(ctx)
                 break
             }
         }

@@ -51,7 +51,7 @@ class NioServer extends Thread {
 
         //启动worker线程
         GettyConfig.WORKER_NUM.times {
-            def worker = new Worker(CommonUtils.deepCopy(pipeLine))
+            def worker = new Worker()
             workers.add(worker)
             worker.start()
         }
@@ -83,7 +83,12 @@ class NioServer extends Thread {
                         sc.configureBlocking(false)
 
                         //创建连接上下文
-                        def ctx = new ConnectionCtx(sc, worker)
+                        def ctx = new ConnectionCtx()
+                        ctx.with {
+                            setWorker(worker)
+                            setChannel(sc)
+                            setPipeLine(CommonUtils.deepCopy(this.pipeLine) as PipeLine)
+                        }
 
                         logger.debug("Worker.selector ${worker.selector}")
 
