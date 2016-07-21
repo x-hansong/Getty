@@ -1,6 +1,7 @@
 package com.hansong.getty.event
 
 /**
+ * 事件处理器链
  * Created by hansong.xhs on 2016/6/27.
  */
 class HandlerChain implements Notifier{

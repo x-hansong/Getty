@@ -4,6 +4,7 @@ import groovy.transform.ToString
 import org.slf4j.LoggerFactory
 
 /**
+ * 配置参数
  * Created by hansong.xhs on 2016/6/28.
  */
 @ToString

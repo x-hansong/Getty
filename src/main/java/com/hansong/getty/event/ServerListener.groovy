@@ -1,6 +1,7 @@
 package com.hansong.getty.event
 
 /**
+ * 事件监听器
  * Created by hansong.xhs on 2016/6/22.
  */
 interface ServerListener extends Serializable{

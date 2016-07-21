@@ -12,6 +12,7 @@ import static com.hansong.getty.http.HttpHeader.*
 import static com.hansong.getty.http.HttpMethod.*
 
 /**
+ * Http 请求处理器，目前只支持GET方法
  * Created by hansong.xhs on 2016/6/29.
  */
 class HttpRequestHandler extends EventAdapter{

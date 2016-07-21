@@ -4,6 +4,7 @@ import com.hansong.getty.BufferUtils
 import com.hansong.getty.event.EventAdapter
 
 /**
+ * 行解码器，按行解析数据
  * Created by hansong.xhs on 2016/6/27.
  */
 class LineBasedDecoder extends EventAdapter {
@@ -45,6 +46,11 @@ class LineBasedDecoder extends EventAdapter {
         }
     }
 
+    /**
+     * 解析数据
+     * @param frame 原始二进制数据
+     * @return 按换行符分割的数据列表
+     */
     def decode(frame) {
         def lines = []
         int start = 0

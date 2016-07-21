@@ -1,6 +1,7 @@
 package com.hansong.getty.event
 
 /**
+ * 事件触发
  * Created by hansong.xhs on 2016/6/27.
  */
 interface Notifier extends Serializable{

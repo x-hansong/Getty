@@ -6,22 +6,24 @@ import org.slf4j.LoggerFactory
 import java.nio.channels.SelectionKey
 import java.nio.channels.Selector
 import java.nio.channels.ServerSocketChannel
-
 /**
+ * 负责监听端口，接受新连接，分配给工作线程进行处理
  * Created by hansong.xhs on 2016/6/22.
  */
 class NioServer extends Thread {
 
-    //服务端的套接字通道
+    /**服务端的套接字通道*/
     ServerSocketChannel ssc
 
-    //选择器
+    /**选择器*/
     Selector selector
 
     PipeLine pipeLine
 
+    /**工作线程列表*/
     def workers = []
 
+    /**当前工作线程索引*/
     int index
 
     static logger = LoggerFactory.getLogger(NioServer.name)

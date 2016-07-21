@@ -15,12 +15,16 @@ class Worker extends Thread {
 
     def logger = LoggerFactory.getLogger("${Worker.name}-${this.getId()}")
 
+    /**选择器*/
     Selector selector
 
+    /**读缓冲区*/
     ByteBuffer buffer
 
+    /**主线程分配的连接队列*/
     def queue = []
 
+    /**存储按超时时间从小到大的连接*/
     TreeMap<Long, ConnectionCtx> ctxTreeMap
 
     Worker() {

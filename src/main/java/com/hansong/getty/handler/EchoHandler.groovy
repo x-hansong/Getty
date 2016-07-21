@@ -5,6 +5,7 @@ import com.hansong.getty.event.EventAdapter
 import org.slf4j.LoggerFactory
 
 /**
+ * 回显处理器
  * Created by hansong.xhs on 2016/6/23.
  */
 class EchoHandler extends EventAdapter{
