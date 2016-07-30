@@ -18,6 +18,7 @@ class NioServer extends Thread {
     /**选择器*/
     Selector selector
 
+    /**事件总线*/
     PipeLine pipeLine
 
     /**工作线程列表*/

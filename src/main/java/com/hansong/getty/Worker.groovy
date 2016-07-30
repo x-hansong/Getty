@@ -33,6 +33,11 @@ class Worker extends Thread {
         buffer = ByteBuffer.allocateDirect(GettyConfig.WORKER_RCV_BUFFER_SIZE)
     }
 
+    /**
+     * 将文件写入到channel
+     * @param channel
+     * @param file
+     */
     void write(channel, File file) {
 
         FileInputStream fin = new FileInputStream(file)
@@ -51,6 +56,11 @@ class Worker extends Thread {
 
     }
 
+    /**
+     * 将字节数组写入到channel
+     * @param channel
+     * @param bytes
+     */
     void write(channel, byte[] bytes) {
         buffer.clear()
 
@@ -66,6 +76,11 @@ class Worker extends Thread {
         }
     }
 
+    /**
+     * 从连接中读取数据，触发pipeline的读事件
+     * 连接出现异常则触发pipeline的关闭事件
+     * @param ctx
+     */
     private void read(ctx) {
         def channel = ctx.channel
 
@@ -108,10 +123,11 @@ class Worker extends Thread {
         while (true) {
             selector.select()
 
+            //注册主线程发送过来的连接
             registerCtx()
-
+            //关闭超时的连接
             closeTimeoutCtx()
-
+            //处理事件
             dispatchEvent()
 
         }
@@ -125,10 +141,12 @@ class Worker extends Thread {
         try {
             //遍历后删除key
             selector.selectedKeys().removeAll { key ->
+                //连接上下文的引用存在key的attachment中
                 def ctx = key.attachment()
                 if (key.isValid()) {
                     if (key.isReadable()) {
                         logger.debug("read event")
+                        ctx.resetTimeout()
                         read(ctx)
                     }
                 }

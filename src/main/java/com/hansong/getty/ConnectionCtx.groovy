@@ -28,4 +28,12 @@ class ConnectionCtx {
     ConnectionCtx() {
         this.timeout = System.currentTimeMillis() + GettyConfig.TIME_OUT
     }
+
+    /**
+     * 重置超时时间
+     * @return
+     */
+    void resetTimeout() {
+        this.timeout = System.currentTimeMillis() + GettyConfig.TIME_OUT
+    }
 }
